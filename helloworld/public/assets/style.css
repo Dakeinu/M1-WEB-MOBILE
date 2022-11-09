@@ -1,0 +1,17 @@
+body {
+    max-width: 100%;
+}
+
+h1 {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.container {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>PWA</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello World</h1>
+        <button id="installPWA" class="w-48 h-10 px-6 font-semibold rounded-md bg-black text-white ">Install PWA</button>
+        <a href="page2.html">Page 2</a>
+    </div>
+</body>
+
+<script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceworker.js')
+        .then((reg) => console.log('service worker registered', reg))
+        .catch((err) => console.log('service worker not registered', err));
+
+    }
+    const installPWA = document.getElementById('installPWA');
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installPWA').style.display = 'block';
+    });
+
+    installPWA.onclick = () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if(choiceResult.outcome === 'accepted') {
+                console.log('User accepted the PWA prompt');
+            } else {
+                console.log('User dismissed the PWA prompt');
+            }
+            deferredPrompt = null;
+        });
+    }
+</script>
+
+</html>
